@@ -1,0 +1,9 @@
+/* DataGrid.module.css */
+
+.even {
+  background-color: #eeeeee;
+}
+
+.odd {
+  background-color: #fbfbfb;
+}

@@ -1,10 +1,11 @@
+import { Card } from "@mui/material"
 import TransactionsGrid from "./transactions-grid"
 
 const TransactionsContainers = () => {
   return (
-    <div className="container mx-auto">
+    <Card className="container mx-auto p-4">
       <TransactionsGrid />
-    </div>
+    </Card>
   )
 }
 

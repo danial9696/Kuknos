@@ -4,6 +4,7 @@ import { DataGrid, GridSortItem, GridSortModel } from "@mui/x-data-grid"
 import { Columns } from "./transactions-cols"
 import { ROWS_PER_PAGE } from "@/libs/constants"
 import { GetTransactionParamsModel } from "../types"
+import styles from "@/styles/table.module.css"
 
 const TransactionsGrid = () => {
   const [paginationModel, setPaginationModel] = useState({
@@ -34,16 +35,22 @@ const TransactionsGrid = () => {
     order: (sort.sort as "ASC" | "DESC") ?? "",
     orderBy:
       sort.field === "createdAt" ? "date" : (sort.field as "date" | "name"),
+    all: "true",
   }
 
   const { data, isFetching } = useGetTransactions(params)
 
   console.log("data", data)
 
+  console.log("paginationModel", paginationModel)
+
   return (
     <DataGrid
       paginationMode="server"
       pagination
+      getRowClassName={(params) =>
+        params.indexRelativeToCurrentPage % 2 === 0 ? styles.even : styles.odd
+      }
       columns={Columns}
       rows={data?.payload.data}
       rowCount={data?.payload?.meta?.pageCount ?? 1}

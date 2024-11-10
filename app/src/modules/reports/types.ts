@@ -16,6 +16,7 @@ export interface GetTransactionParamsModel {
   page: number
   take: number
   name?: string
+  all?: string
   order: "ASC" | "DESC"
   orderBy: "date" | "name"
 }

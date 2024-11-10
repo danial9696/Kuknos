@@ -7,6 +7,8 @@ type SortableTransactionFields = "amount" | "price" | "timestamp"
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
+  const all = searchParams.get("all")
+
   const type = searchParams.get("type")
   const asset = searchParams.get("asset")
   const startDate = searchParams.get("startDate")
@@ -16,14 +18,19 @@ export async function GET(request: NextRequest) {
   const page = parseInt(searchParams.get("page") ?? "1", 10)
   const limit = parseInt(searchParams.get("take") ?? "5", 10)
 
+  if (all === "true")
+    return NextResponse.json({ data: transactions, meta: null })
   // Filter by transaction type, asset, and date range
   let filteredTransactions = transactions
+
   if (type) {
     filteredTransactions = filteredTransactions.filter((t) => t.type === type)
   }
+
   if (asset) {
     filteredTransactions = filteredTransactions.filter((t) => t.asset === asset)
   }
+
   if (startDate || endDate) {
     const start = startDate ? new Date(startDate) : new Date("2000-01-01")
     const end = endDate ? new Date(endDate) : new Date()
